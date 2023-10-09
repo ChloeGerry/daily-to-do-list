@@ -17,19 +17,33 @@
       </form>
       <div class="list_wrapper" v-if="taskStatus.length > 0">
         <article v-for="taskStatusItem in taskStatus" class="list_article">
-          <i
-            v-if="!taskStatusItem.isTaskDone"
-            @click="updateTaskStatus(taskStatusItem)"
-            class="fa-regular fa-circle-check check_icon"
-          ></i>
-          <i
-            v-if="taskStatusItem.isTaskDone"
-            @click="deleteTask(taskStatusItem)"
-            class="fa-solid fa-trash trash_icon"
-          ></i>
-          <p class="list_task" :key="taskStatusItem.task">
-            {{ taskStatusItem.task }}
-          </p>
+          <div class="listItem_wrapper">
+            <i
+              tabindex="0"
+              v-if="!taskStatusItem.isTaskDone"
+              @keyup="updateTaskStatus(taskStatusItem)"
+              @click="updateTaskStatus(taskStatusItem)"
+              class="fa-regular fa-circle circle_icon"
+            ></i>
+            <i
+              tabindex="0"
+              v-if="taskStatusItem.isTaskDone"
+              @keyup="updateTaskStatus(taskStatusItem)"
+              @click="updateTaskStatus(taskStatusItem)"
+              class="fa-regular fa-circle-check check_icon"
+            ></i>
+            <p class="list_task" :key="taskStatusItem.task">
+              {{ taskStatusItem.task }}
+            </p>
+          </div>
+          <div>
+            <i
+              tabindex="0"
+              @keyup="deleteTask(taskStatusItem)"
+              @click="deleteTask(taskStatusItem)"
+              class="fa-solid fa-trash trash_icon"
+            ></i>
+          </div>
         </article>
       </div>
     </section>
@@ -41,7 +55,6 @@ export default {
   data() {
     return {
       date: new Date(),
-      // tasks: [],
       newTask: '',
       taskStatus: [],
     };
@@ -90,7 +103,7 @@ export default {
     updateTaskStatus(taskStatusItem) {
       this.taskStatus.forEach((choosenTask) => {
         if (choosenTask.task === taskStatusItem.task) {
-          choosenTask.isTaskDone = true;
+          choosenTask.isTaskDone = !choosenTask.isTaskDone;
           localStorage.setItem('tasks', JSON.stringify(this.taskStatus));
         }
       });
@@ -141,12 +154,12 @@ export default {
 
 .task_form-input {
   margin: 8px 0 40px 0;
-  border: none;
+  border: 1px solid #d9d9d9;
   padding: 16px;
+  border-radius: 5px;
 }
 .task_form-input.active {
   border: 1px solid #ff4d4d;
-  border-radius: 5px;
   animation: shake 150ms ease-in-out;
 }
 
@@ -197,7 +210,7 @@ export default {
 
 @keyframes spin {
   100% {
-    transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
 .add_button:after {
@@ -228,12 +241,18 @@ export default {
 
 .list_article {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: end;
   border-bottom: 1px solid #d9d9d9;
   padding: 16px 0;
 }
 
+.listItem_wrapper {
+  display: flex;
+  align-items: end;
+}
+
+.circle_icon,
 .check_icon,
 .trash_icon {
   cursor: pointer;
@@ -247,6 +266,8 @@ export default {
 
 .trash_icon {
   color: #ff4d4d;
+  text-align: end;
+  padding: 0;
 }
 
 .list_task {
