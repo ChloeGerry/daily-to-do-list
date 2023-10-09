@@ -6,7 +6,7 @@
         {{ currentDate }}
       </h1>
       <form class="task_form" @submit.prevent="addNewTask(newTask)">
-        <label>Nom de la tâche :</label>
+        <label class="task_form-label">Nom de la tâche :</label>
         <input
           id="test"
           class="task_form-input"
@@ -133,8 +133,6 @@ export default {
 
 .list_section {
   background-color: #fff;
-  width: 50%;
-  height: 100%;
   border-radius: 5px;
   padding: 32px;
 }
@@ -157,6 +155,7 @@ export default {
   border: 1px solid #d9d9d9;
   padding: 16px;
   border-radius: 5px;
+  font-size: 1.2rem;
 }
 .task_form-input.active {
   border: 1px solid #ff4d4d;
@@ -191,8 +190,8 @@ export default {
 
 .add_button:before {
   content: '';
-  height: 300px;
-  width: 300px;
+  height: 150px;
+  width: 200px;
   position: absolute;
   background: conic-gradient(
     #fd004c,
@@ -203,9 +202,9 @@ export default {
     #b102b7,
     #fd004c
   );
-  left: -55%;
-  top: -50%;
-  animation: spin 1.5s infinite linear;
+  left: -38%;
+  top: -100%;
+  animation: spin 1.3s infinite linear;
 }
 
 @keyframes spin {
@@ -242,14 +241,14 @@ export default {
 .list_article {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: center;
   border-bottom: 1px solid #d9d9d9;
   padding: 16px 0;
 }
 
 .listItem_wrapper {
   display: flex;
-  align-items: end;
+  align-items: center;
 }
 
 .circle_icon,
@@ -267,11 +266,27 @@ export default {
 .trash_icon {
   color: #ff4d4d;
   text-align: end;
-  padding: 0;
+  padding: 0 0 0 16px;
 }
 
 .list_task {
   font-size: 1.2rem;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .main_title {
+    font-size: 2rem;
+  }
+
+  .task_form-label {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .list_section {
+    padding: 16px;
+  }
 }
 </style>
